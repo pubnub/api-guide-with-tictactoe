@@ -1,0 +1,253 @@
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+html {
+  height: 100%;
+}
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; 
+  font-weight: 300;
+  line-height: 1.4em;
+  background: #fff;
+  background-size: cover;
+  color: #333;
+  font-size: 1.2em;
+}
+/*footer {
+  font-size: 0.75em;
+  color: silver;
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+}
+footer a {
+  color: #f80;
+}*/
+a {
+  color: #E24329;
+}
+header {
+  padding: 16px 20px;
+  background-color: #74B1B4;
+  color: #fff;
+}
+header a {
+  text-decoration: none;
+  color: #fff;
+}
+.index a {
+  color: #333;
+}
+.index li {
+  line-height: 1.5em;
+}
+h1, h2, h3 {
+  font-weight: 200;
+  text-rendering: optimizeLegibility;
+}
+h1, h3 {
+  color: #FC6D26;
+}
+h2 {
+  color: #E24329;
+}
+code {
+  font-size: 1.2em;
+}
+header .logo {
+  display: block;
+  margin: 1em auto;
+  width: 240px;
+  height: 206px;
+  opacity: 0.7;
+}
+.masthead {
+  width: 80%;
+  margin: 70px auto;
+}
+.masthead h1 {
+  font-size: 48px;
+}
+.main {
+  width: 80%;
+  margin: 2em auto;
+}
+footer {
+  margin: 4em 2em 2em 2em;
+  text-align: right;
+}
+input[type=button], button, a.button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #ddd;
+  color: #333;
+  font-size: 1em;
+  padding: .7em 1em;
+  margin-bottom: 1em;
+}
+input[type=button], button, a.button {
+  background: #EFBD19;
+  color: #fff;
+  min-height: 48px;
+}
+input[type=button]:disabled, button:disabled, a.button:disabled {
+  background: #e6e6e6;
+  color: #909090;
+  text-shadow: 0 1px 0 #f3f3f3;
+}
+input[type=check] {
+  margin-right: 1em;
+}
+.subdue {
+  color: #787878;
+}
+.game {
+  margin: 2em 0;
+  overflow: auto;
+  width: 100%
+}
+.game .col {
+  float: left;
+  margin-right: 2em;
+}
+.game .col:first-of-type {
+  min-width: 200px;
+}
+ol#moves {
+    counter-reset: item;
+    list-style-type: none;
+    margin-left: -20px;
+}
+
+ol#moves li:before {
+    content: 'Move #' counter(item) '. ';
+    counter-increment: item;
+}
+#tictactoe {
+  margin: 1em auto;
+  padding: 20px;
+  background: transparent url(../images/tictactoe-bkgd.png) 0 0 no-repeat;
+  width: 200px;
+}
+#tictactoe.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+#whosTurn {
+  color: #E24329;
+}
+#pubsub span {
+  color: #E24329;
+}
+#pubsub code {
+  font-size: 1.8em;
+  line-height: 2em;
+}
+#presence em {
+  color: #FC6D26;
+}
+#presenceConsole {
+  position: relative;
+  padding: 2.5em 2em 1.5em;
+  background: #645252 url(../images/console-header.png) top left no-repeat;
+  color: #fff;
+  font-family: monospace;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  min-height: 100px;
+}
+#presenceConsole:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 25px;
+  background: #E2E2E2;
+  background-image: url(../images/console-header.png);
+  background-image: url(../images/console-header.png), linear-gradient(to bottom, #ebebeb, #d5d5d5);
+  background-repeat: no-repeat;
+  border-bottom: 1px solid #5B5B5B;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+#presenceConsole:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "Presence Console";
+  padding-left: 75px;
+  font-family: sans-serif; 
+  color: #5b5b5b;
+  font-size: 0.75em;
+}
+.presence {
+  position: relative;
+  min-width: 80px;
+  height: 80px;
+  padding: .5em;
+  margin: 20px 0 20px 50px;
+  display: inline-block;
+  border-radius: 8px;
+  color: #fff;
+  text-align: center;
+  background: #B0AEA9;
+}
+.presence:after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 28px;
+  border: 0;
+  border-right-width: 20px;
+  border-bottom-width: 15px;
+  border-style: solid;
+  border-color: transparent #B0AEA9;
+  display: block;
+  width: 0;
+}
+.presence strong {
+  font-size: 2.2rem;
+  line-height: 2.3rem;
+}
+.presence span {
+  display: block;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+}
+.presence.two {
+  background: #EFBD19;
+}
+.presence.two:after {
+  border-color: transparent #EFBD19;
+}
+
+/*!
+ *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+/* FONT PATH
+ * -------------------------- */
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/fontawesome-webfont.woff');
+  font-weight: normal;
+  font-style: normal;
+}
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 1.3em;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: 10px;
+}
+.fa-github::before {
+    content: "\f09b";
+}
+
+
