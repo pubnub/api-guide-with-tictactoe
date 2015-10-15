@@ -15,4 +15,4 @@ Once you go to one of the API guide page, you will see a Tic-Tac-Toe board with 
 At the each section, you will learn how PubNub features work as you play the game.
 
 
-![Tic-Tac-Toe](https://raw.githubusercontent.com/girliemac/api-guide-with-tictactoe/master/images/tictactoe.gif "Tic-Tac-Toe")
+![Tic-Tac-Toe](https://raw.githubusercontent.com/pubnub/api-guide-with-tictactoe/master/images/tictactoe.gif "Tic-Tac-Toe")
