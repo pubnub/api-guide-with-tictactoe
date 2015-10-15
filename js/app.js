@@ -13,7 +13,7 @@
 
   gameId.textContent = gameid; 
 
-  var oppoenetUrl = 'https://pubnub.github.io/api-guide-with-tictactoe/plain.html?id=' +gameid;
+  var oppoenetUrl = 'http://pubnub.github.io/api-guide-with-tictactoe/plain.html?id=' +gameid;
   gameIdQuery.innerHTML = '<a href="' +oppoenetUrl+ '" target="_blank">' +oppoenetUrl+ '</a>';
 
   var channel = 'tictactoe--'+ gameid;
