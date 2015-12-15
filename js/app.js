@@ -22,8 +22,8 @@
   var uuid = PUBNUB.uuid();
   
   var pubnub = PUBNUB.init({
-      subscribe_key: 'your-sub-key',
-      publish_key: 'your-pub-key',
+      subscribe_key: 'sub-c-182105ac-0001-11e5-8fd4-0619f8945a4f',
+      publish_key: 'pub-c-ce04f67b-0f26-43ce-8be2-192e9821d1a3',
       uuid: uuid
   });
 
