@@ -52,6 +52,9 @@ h2 {
 code {
   font-size: 1.2em;
 }
+header {
+  position: relative;
+}
 header .logo {
   display: block;
   margin: 1em auto;
@@ -234,7 +237,7 @@ ol#moves li:before {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../fonts/fontawesome-webfont.woff');
+  src: url('https://github.com/pubnub/auth-chat-demo/blob/master/public/fonts/fontawesome-webfont.woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -250,5 +253,10 @@ ol#moves li:before {
 .fa-github::before {
     content: "\f09b";
 }
-
+header .fa {
+  position: absolute;
+  right: 18px;
+  top: 9px;
+  font-size: 2em;
+}
 
