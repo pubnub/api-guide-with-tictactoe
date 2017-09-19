@@ -63,7 +63,6 @@
     presence: function(event) {
       console.log(event);
 
-      // TODO: need to set uuid after pubnub init
       if (event.uuid === uuid && event.action === 'join') {
         if (event.occupancy < 2) {
           whosTurn.textContent = 'Waiting for your opponent...';
@@ -104,7 +103,6 @@
     withPresence: true
   });
 
-
   function publishPosition(player, position) {
     pubnub.publish(
       {
@@ -114,10 +112,10 @@
       function (status, response) {
         if (status.error) {
             // handle error
-            console.error(status)
+            console.error(status);
         }
         else {
-            console.log("message Published w/ timetoken", response.timetoken)
+            console.log("message Published w/ timetoken", response.timetoken);
         }
       }
     );
@@ -133,12 +131,12 @@
     }
   }
 
-  var squares = [],
-    EMPTY = '\xA0',
-    score,
-    moves,
-    turn = 'X',
-    wins = [7, 56, 448, 73, 146, 292, 273, 84];
+  var squares = [];
+  var EMPTY = '\xA0';
+  var score;
+  var moves;
+  var turn = 'X';
+  var wins = [7, 56, 448, 73, 146, 292, 273, 84];
 
   function startNewGame() {
     turn = 'X';
@@ -163,7 +161,7 @@
 
   function checkGameStatus(player, el) {
     moves += 1;
-    console.log('Moves: '+moves);
+    console.log('Moves: ' + moves);
 
     score[player] += el.indicator;
     console.log('Score for player, ' + player + ': ' + score[player]);
@@ -182,7 +180,6 @@
 
   function set() {
     if (turn !== mySign) return;
-
     if (this.firstChild.nodeValue !== EMPTY) return;
 
     publishPosition(mySign, this.dataset.position);
@@ -201,6 +198,7 @@
     for (i = 1; i < 4; i += 1) {
       row = document.createElement('tr');
       board.appendChild(row);
+
       for (j = 1; j < 4; j += 1) {
         cell = document.createElement('td');
         cell.dataset.position = i + '-' + j;
@@ -310,7 +308,7 @@
             output.innerHTML =  output.innerHTML + displayOutput(msg);
           });
         }
-      });
+      );
     }
   }
 
