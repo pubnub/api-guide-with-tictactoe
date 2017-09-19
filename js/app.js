@@ -11,20 +11,21 @@
 
   gameid = (getGameId()) ? getGameId() : rand;
 
-  gameId.textContent = gameid; 
+  gameId.textContent = gameid;
 
-  var oppoenetUrl = 'http://pubnub.github.io/api-guide-with-tictactoe/plain.html?id=' +gameid;
+  var oppoenetUrl = 'https://pubnub.github.io/api-guide-with-tictactoe/plain.html?id=' +gameid;
   gameIdQuery.innerHTML = '<a href="' +oppoenetUrl+ '" target="_blank">' +oppoenetUrl+ '</a>';
 
   var channel = 'tictactoe--'+ gameid;
   console.log('Channel: '+channel);
 
   var uuid = PUBNUB.uuid();
-  
+
   var pubnub = PUBNUB.init({
-      subscribe_key: 'your-sub-key',
-      publish_key: 'your-pub-key',
-      uuid: uuid
+      subscribe_key: 'demo', // replace with your own sub-key
+      publish_key:   'demo', // replace with yout own pub-key
+      uuid: uuid,
+      ssl: true
   });
 
   function displayOutput(m) {
@@ -39,7 +40,7 @@
    */
 
 
-  var mySign = 'X'; 
+  var mySign = 'X';
 
   pubnub.subscribe({
     channel: channel,
@@ -49,9 +50,9 @@
 
       if(m.uuid === uuid && m.action === 'join') {
         if(m.occupancy < 2) {
-          whosTurn.textContent = 'Waiting for your opponent...'; 
+          whosTurn.textContent = 'Waiting for your opponent...';
         } else if(m.occupancy === 2) {
-          mySign = 'O'; 
+          mySign = 'O';
         } else if (m.occupancy > 2) {
           alert('This game already have two players!');
           tictactoe.className = 'disabled';
@@ -109,7 +110,7 @@
     }
   }
 
-  var squares = [], 
+  var squares = [],
     EMPTY = '\xA0',
     score,
     moves,
@@ -118,7 +119,7 @@
 
   function startNewGame() {
     var i;
-    
+
     turn = 'X';
     score = {'X': 0, 'O': 0};
     moves = 0;
@@ -156,15 +157,15 @@
     }
   }
 
-  function set() { 
+  function set() {
 
     if (turn !== mySign) return;
 
     if (this.firstChild.nodeValue !== EMPTY) return;
-    
+
     publishPosition(mySign, this.dataset.position);
 
-    // this is for Pub/Sub explained section. 
+    // this is for Pub/Sub explained section.
     toBePublished(mySign, this.dataset.position)
 
   }
@@ -216,7 +217,7 @@
     document.getElementById('subPlayer').textContent = '"' + m.player + '"';
     document.getElementById('subPosition').textContent = '"' + m.position + '"';
   }
-   
+
   /*
    * History API Explained section
    */
@@ -252,11 +253,11 @@
       getHistory(count, isReversed, timespan);
     }, false);
    }
-  
+
 
   function getHistory(count, isReversed, timespan) {
     if(timespan) {
-      
+
       var start = (new Date().getTime() - (timespan*60*1000)) * 10000;
       var end = new Date().getTime() * 10000;
 
@@ -268,7 +269,7 @@
         start: start,
         end: end,
         callback: function(messages) {
-          messages[0].forEach(function(m){ 
+          messages[0].forEach(function(m){
             console.log(m);
             output.innerHTML =  output.innerHTML + displayOutput(m);
           });
@@ -281,7 +282,7 @@
         count: count,
         reverse: isReversed,
         callback: function(messages) {
-          messages[0].forEach(function(m){ 
+          messages[0].forEach(function(m){
             console.log(m);
             output.innerHTML =  output.innerHTML + displayOutput(m);
           });
@@ -301,7 +302,7 @@
     document.querySelector('.presence').classList.remove('two');
     document.querySelector('.presence strong').textContent = m.occupancy;
     document.querySelector('.presence span').textContent = 'player';
-    
+
     if(m.occupancy > 1) {
       document.querySelector('.presence span').textContent = 'players';
       document.querySelector('.presence').classList.add('two');
