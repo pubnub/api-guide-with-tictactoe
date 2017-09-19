@@ -12,6 +12,16 @@
 </head>
 
 <body>
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PZWSZ2"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PZWSZ2');</script>
+  <!-- End Google Tag Manager -->
+
 	<header>
     <a href="index.html">PubNub JavaScript APIs</a>
   </header>
@@ -34,7 +44,7 @@
         <h3>How to Play</h3>
 
         <p><strong>Tic-Tac-Toe</strong> is for two players, X and O, who take turns marking the spaces in a 3×3 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.</p>
-        
+
         <p>This is a realtime multi-player Tic-Tac-Toe on web- You and your opponent need to play together on separate browsers. You can just open an another browser window to act as your own opponent. Your opponent needs to use the same Game ID by passing it in the URL as a query string.</p>
 
         <p><strong>You (X):</strong>
@@ -44,7 +54,7 @@
         </ol>
         </p>
 
-        <p><strong>Your opponent (O):</strong> 
+        <p><strong>Your opponent (O):</strong>
         <ol>
           <li>Open an another browser tab or window.</li>
           <li>In the new browser tab or window, go to: <strong><span id="gameIdQuery"></span></strong></li>
@@ -53,7 +63,7 @@
 
         <p>To demonstrate how PubNub publish / subscribe works, scroll a bit to see the bottom section of this page, and watch what message is being published and subscribed!</p>
       </section>
-      
+
       <section class="game">
         <div class="col">
           &nbsp;
@@ -80,7 +90,7 @@
 
       <p class="desc">
         Let's say, you are playing <strong>X</strong>. <br><br>
-        Each time you click one of the cells, your move is <em>published</em> to PubNub data stream. 
+        Each time you click one of the cells, your move is <em>published</em> to PubNub data stream.
         Your opponent receives the data by <em>subscribing</em> the message just have been published.<br>
         The UI on both browser windows is updated upon each subscribe call.
       </p>
@@ -90,7 +100,7 @@
 
       <p>You subscribing (all the messages published to PubNub stream): <br>
       <code>{player: <span id="subPlayer">---</span>, position: <span id="subPosition">---</span>}</code>
-      
+
     </section>
 
   </section>
@@ -98,8 +108,8 @@
   <footer><a href="http://pubnub.com" target="_blank">PubNub.com</a></footer>
 
 
-  <script src="//cdn.pubnub.com/pubnub-3.7.14.min.js"></script>
+  <script src="https://cdn.pubnub.com/pubnub-3.7.14.min.js"></script>
   <script src="js/app.js"></script>
-	
+
 </body>
 </html>
