@@ -1,5 +1,4 @@
 (function() {
-
   var gameId =  document.querySelector('#gameId');
   var gameIdQuery = document.querySelector('#gameIdQuery');
   var tictactoe = document.querySelector('#tictactoe');
@@ -20,153 +19,113 @@
   console.log('Channel: ' + channel);
 
   var pubnub = new PubNub({
-      subscribeKey: 'demo-36',
-      publishKey: 'demo-36',
-      ssl: true
+    subscribeKey: 'demo-36',
+    publishKey: 'demo-36',
+    ssl: true
   });
 
-  function displayOutput(m) {
-    if(!m) return;
-    return '<li><strong>' +  m.player + '</strong>: ' + m.position + '</li>';
+  var uuid = pubnub.uuid;
+
+  function displayOutput(msg) {
+    if (!msg) return;
+    return '<li><strong>' +  msg.player + '</strong>: ' + msg.position + '</li>';
   }
 
   /*
    * Tic-tac-toe
    * Based on http://jsfiddle.net/5wKfF/378/
-   * Multiplayer feature with PubNub
+   * Two player feature with PubNub
    */
-
 
   var mySign = 'X';
 
-  // pubnub.subscribe({
-  //   channels: channel,
-  //   connect: play,
-  //   presence: function(m) {
-  //     console.log(m);
-  //
-  //     if(m.uuid === uuid && m.action === 'join') {
-  //       if(m.occupancy < 2) {
-  //         whosTurn.textContent = 'Waiting for your opponent...';
-  //       } else if(m.occupancy === 2) {
-  //         mySign = 'O';
-  //       } else if (m.occupancy > 2) {
-  //         alert('This game already have two players!');
-  //         tictactoe.className = 'disabled';
-  //       }
-  //     }
-  //
-  //     if(m.occupancy === 2) {
-  //       tictactoe.className = '';
-  //       startNewGame();
-  //     }
-  //
-  //     document.getElementById('you').textContent = mySign;
-  //
-  //     // For Presence Explained Section only
-  //     if(document.querySelector('.presence')) {
-  //       showPresenceExamples(m);
-  //     }
-  //
-  //   },
-  //   callback: function(m) {
-  //     // Display the move
-  //     if(document.querySelector('#moves')) {
-  //       var movesOutput = document.querySelector('#moves');
-  //       movesOutput.innerHTML =  movesOutput.innerHTML + displayOutput(m);
-  //     }
-  //
-  //     // Display the move on the board
-  //     var el = document.querySelector('[data-position="'+m.position+'"]');
-  //     el.firstChild.nodeValue = m.player;
-  //     console.log(el);
-  //
-  //     checkGameStatus(m.player, el);
-  //
-  //     // this is for Pub/Sub explained section.
-  //     subscribed(m);
-  //   },
-  // });
+  pubnub.addListener({
+    // message events callback - handles all messages published to the subscribed channels
+    message: function(event) {
+      // Display the move
+      if (document.querySelector('#moves')) {
+        var movesOutput = document.querySelector('#moves');
+        movesOutput.innerHTML =  movesOutput.innerHTML + displayOutput(event.message);
+      }
 
+      // Display the move on the board
+      var el = document.querySelector('[data-position="'+ event.position + '"]');
+      el.firstChild.nodeValue = event.message.player;
+      console.log(el);
 
-    pubnub.addListener({
-        // message events callback - handles all messages published to the subscribed channels
-        message: function(event) {
-            // Display the move
-            if (document.querySelector('#moves')) {
-                var movesOutput = document.querySelector('#moves');
-                movesOutput.innerHTML =  movesOutput.innerHTML + displayOutput(event.message);
-            }
+      checkGameStatus(event.message.player, el);
 
-            // Display the move on the board
-            var el = document.querySelector('[data-position="'+ event.position + '"]');
-            el.firstChild.nodeValue = event.message.player;
-            console.log(el);
+      // this is for Pub/Sub explained section.
+      subscribed(event.message);
+    },
 
-            checkGameStatus(event.message.player, el);
+    // presence events callback - handles all presence events for all channels subscribed withPresence
+    presence: function(event) {
+      console.log(event);
 
-            // this is for Pub/Sub explained section.
-            subscribed(event.message);
-        },
-
-        // presence events callback - handles all presence events for all channels subscribed withPresence
-        presence: function(event) {
-            console.log(event);
-
-            // TODO: need to set uuid after pubnub init
-            if (event.uuid === uuid && event.action === 'join') {
-                if (event.occupancy < 2) {
-                    whosTurn.textContent = 'Waiting for your opponent...';
-                }
-                else if (event.occupancy === 2) {
-                    mySign = 'O';
-                }
-                else if (event.occupancy > 2) {
-                    alert('This game already have two players!');
-                    tictactoe.className = 'disabled';
-                }
-            }
-
-            if (event.occupancy === 2) {
-                tictactoe.className = '';
-                startNewGame();
-            }
-
-            document.getElementById('you').textContent = mySign;
-
-            // For Presence Explained Section only
-            if (document.querySelector('.presence')) {
-                showPresenceExamples(event);
-            }
-        },
-
-        // status events callback - handles network connectivity status events for all subscribed channels
-        status: function(event) {
-            if (event.status == "PNConnectedCategory") {
-                play();
-            }
+      // TODO: need to set uuid after pubnub init
+      if (event.uuid === uuid && event.action === 'join') {
+        if (event.occupancy < 2) {
+          whosTurn.textContent = 'Waiting for your opponent...';
         }
-    });
+        else if (event.occupancy === 2) {
+          mySign = 'O';
+        }
+        else if (event.occupancy > 2) {
+          alert('This game already have two players!');
+          tictactoe.className = 'disabled';
+        }
+      }
+
+      if (event.occupancy === 2) {
+        tictactoe.className = '';
+        startNewGame();
+      }
+
+      document.getElementById('you').textContent = mySign;
+
+      // For Presence Explained Section only
+      if (document.querySelector('.presence')) {
+        showPresenceExamples(event);
+      }
+    },
+
+    // status events callback - handles network connectivity status events for all subscribed channels
+    status: function(event) {
+      if (event.status == "PNConnectedCategory") {
+          play();
+      }
+    }
+  });
 
   // subscribe to the game channel and monitor presence events on that channel
   pubnub.subscribe({channels: [channel], withPresence: true});
 
 
   function publishPosition(player, position) {
-    pubnub.publish({
-      channel: channel,
-      message: {player: player, position: position},
-      callback: function(m){
-        console.log(m);
+    pubnub.publish(
+      {
+        channel: channel,
+        message: {player: player, position: position}
+      },
+      function (status, response) {
+        if (status.error) {
+            // handle error
+            console.error(status)
+        }
+        else {
+            console.log("message Published w/ timetoken", response.timetoken)
+        }
       }
-    });
+    );
   }
 
   function getGameId(){
     // If the uRL comes with referral tracking queries from the URL
-    if(window.location.search.substring(1).split('?')[0].split('=')[0] !== 'id') {
+    if (window.location.search.substring(1).split('?')[0].split('=')[0] !== 'id') {
       return null;
-    } else {
+    }
+    else {
       return window.location.search.substring(1).split('?')[0].split('=')[1];
     }
   }
@@ -179,12 +138,11 @@
     wins = [7, 56, 448, 73, 146, 292, 273, 84];
 
   function startNewGame() {
-    var i;
-
     turn = 'X';
     score = {'X': 0, 'O': 0};
     moves = 0;
-    for (i = 0; i < squares.length; i += 1) {
+
+    for (var i = 0; i < squares.length; i += 1) {
       squares[i].firstChild.nodeValue = EMPTY;
     }
 
@@ -192,8 +150,7 @@
   }
 
   function win(score) {
-    var i;
-    for (i = 0; i < wins.length; i += 1) {
+    for (var i = 0; i < wins.length; i += 1) {
       if ((wins[i] & score) === wins[i]) {
           return true;
       }
@@ -210,16 +167,17 @@
 
     if (win(score[turn])) {
       alert(turn + ' wins!');
-    } else if (moves === 9) {
+    }
+    else if (moves === 9) {
       alert('Boooo!');
-    } else {
+    }
+    else {
       turn = (turn === 'X') ? 'O' : 'X';
       whosTurn.textContent = (turn === mySign) ? 'Your turn' : 'Your opponent\'s turn';
     }
   }
 
   function set() {
-
     if (turn !== mySign) return;
 
     if (this.firstChild.nodeValue !== EMPTY) return;
@@ -228,11 +186,9 @@
 
     // this is for Pub/Sub explained section.
     toBePublished(mySign, this.dataset.position)
-
   }
 
   function play() {
-
     var board = document.createElement('table'),
       indicator = 1,
       i, j,
@@ -315,8 +271,7 @@
 
       getHistory(count, isReversed, timespan);
     }, false);
-   }
-
+  }
 
   function getHistory(count, isReversed, timespan) {
     if(timespan) {
@@ -353,7 +308,6 @@
         }
       });
     }
-
   }
 
   /*
