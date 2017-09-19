@@ -99,7 +99,10 @@
   });
 
   // subscribe to the game channel and monitor presence events on that channel
-  pubnub.subscribe({channels: [channel], withPresence: true});
+  pubnub.subscribe({
+    channels: [channel],
+    withPresence: true
+  });
 
 
   function publishPosition(player, position) {
@@ -315,11 +318,11 @@
    * Presence API Explained section
    */
 
-  function showPresenceExamples(m) {
-    showPresenceConsole(m);
+  function showPresenceExamples(msg) {
+    showPresenceConsole(msg);
 
     document.querySelector('.presence').classList.remove('two');
-    document.querySelector('.presence strong').textContent = m.occupancy;
+    document.querySelector('.presence strong').textContent = msg.occupancy;
     document.querySelector('.presence span').textContent = 'player';
 
     if (m.occupancy > 1) {
@@ -328,22 +331,23 @@
     }
   }
 
-  function showPresenceConsole(m) {
+  function showPresenceConsole(msg) {
     var console = document.querySelector('#presenceConsole');
     var child = document.createElement('div');
-    var text = document.createTextNode(JSON.stringify(m));
+    var text = document.createTextNode(JSON.stringify(msg));
     child.appendChild(text);
     console.appendChild(child);
   }
 
   if (document.getElementById('quitButton')) {
     var quitButton = document.getElementById('quitButton');
+
     quitButton.addEventListener('click', function(e) {
       pubnub.unsubscribe({
-        channel: channel,
-        callback: function(m) {
-          console.log(m);
-          showPresenceConsole(m);
+        channels: [channel],
+        callback: function(msg) {
+          console.log(msg);
+          showPresenceConsole(msg);
         }
       });
     });
