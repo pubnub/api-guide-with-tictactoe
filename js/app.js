@@ -189,10 +189,10 @@
   }
 
   function play() {
-    var board = document.createElement('table'),
-      indicator = 1,
-      i, j,
-      row, cell;
+    var indicator = 1;
+    var i, j;
+    var row, cell;
+    var board = document.createElement('table');
     board.border = 1;
 
     for (i = 1; i < 4; i += 1) {
@@ -209,7 +209,6 @@
         row.appendChild(cell);
         squares.push(cell);
         indicator += indicator;
-
       }
     }
 
@@ -223,17 +222,17 @@
    */
 
   function toBePublished(player, position) {
-    if(!document.getElementById('pubPlayer')) return;
+    if (!document.getElementById('pubPlayer')) return;
 
     document.getElementById('pubPlayer').textContent = '"' + player + '"';
     document.getElementById('pubPosition').textContent = '"' + position + '"';
   }
 
-  function subscribed(m) {
-    if(!document.getElementById('subPlayer')) return;
+  function subscribed(msg) {
+    if (!document.getElementById('subPlayer')) return;
 
-    document.getElementById('subPlayer').textContent = '"' + m.player + '"';
-    document.getElementById('subPosition').textContent = '"' + m.position + '"';
+    document.getElementById('subPlayer').textContent = '"' + msg.player + '"';
+    document.getElementById('subPosition').textContent = '"' + msg.position + '"';
   }
 
   /*
@@ -262,10 +261,10 @@
       output.innerHTML = '';
 
       var count = select.options[select.selectedIndex].value;
-      console.log('Getting '+count+ ' messages from history...');
+      console.log('Getting ' + count + ' messages from history...');
 
       var isReversed = reverseCheck.checked;
-      console.log('Reverse: '+isReversed);
+      console.log('Reverse: ' + isReversed);
 
       var timespan = (timeCheck.checked) ? timeSelect.value : null;
 
@@ -274,36 +273,38 @@
   }
 
   function getHistory(count, isReversed, timespan) {
-    if(timespan) {
-
-      var start = (new Date().getTime() - (timespan*60*1000)) * 10000;
+    if (timespan) {
+      var start = (new Date().getTime() - (timespan * 60 * 1000)) * 10000;
       var end = new Date().getTime() * 10000;
 
       console.log(start, end)
 
-      pubnub.history({
-        channel: channel,
-        count: count,
-        start: start,
-        end: end,
-        callback: function(messages) {
-          messages[0].forEach(function(m){
-            console.log(m);
-            output.innerHTML =  output.innerHTML + displayOutput(m);
+      pubnub.history(
+        {
+          channel: channel,
+          count: count,
+          start: start,
+          end: end
+        },
+        function(status, response) {
+          response.messages.forEach(function(msg) {
+            console.log(msg);
+            output.innerHTML =  output.innerHTML + displayOutput(msg);
           });
         }
-      });
-
+      );
     }
     else {
-      pubnub.history({
-        channel: channel,
-        count: count,
-        reverse: isReversed,
-        callback: function(messages) {
-          messages[0].forEach(function(m){
-            console.log(m);
-            output.innerHTML =  output.innerHTML + displayOutput(m);
+      pubnub.history(
+        {
+          channel: channel,
+          count: count,
+          reverse: isReversed
+        },
+        function(status, response) {
+          response.messages.forEach(function(msg){
+            console.log(msg);
+            output.innerHTML =  output.innerHTML + displayOutput(msg);
           });
         }
       });
