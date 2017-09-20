@@ -93,7 +93,7 @@
 
     // status events callback - handles network connectivity status events for all subscribed channels
     status: function(event) {
-      if (event.status == "PNConnectedCategory") {
+      if (event.category == "PNConnectedCategory") {
           play();
       }
     }
