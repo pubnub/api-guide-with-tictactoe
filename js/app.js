@@ -24,7 +24,9 @@
     ssl: true
   });
 
-  var uuid = pubnub.uuid;
+  // instantiating PubNub generates a UUID for you and stores it in localStorage
+  // and reuses that UUID from localStorage on subsequent PubNub instantiations
+  var uuid = pubnub.getUUID();;
 
   function displayOutput(msg) {
     if (!msg) return;
