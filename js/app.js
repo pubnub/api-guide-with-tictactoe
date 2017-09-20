@@ -4,6 +4,7 @@
   var tictactoe = document.querySelector('#tictactoe');
   var output = document.querySelector('#output');
   var whosTurn = document.getElementById('whosTurn');
+  var winner = document.getElementById('winner');
 
   var gameid = '';
   var rand = (Math.random() * 9999).toFixed(0);
@@ -169,10 +170,12 @@
     console.log('Score for player, ' + player + ': ' + score[player]);
 
     if (win(score[turn])) {
-      alert(turn + ' wins!');
+      // alert(turn + ' wins!');
+      winnner.textContent = turn + ' wins!';
     }
     else if (moves === 9) {
-      alert('Boooo!');
+      // alert('Boooo!');
+      winnner.textContent = 'No Winner';
     }
     else {
       turn = (turn === 'X') ? 'O' : 'X';
