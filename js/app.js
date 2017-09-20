@@ -51,7 +51,7 @@
       }
 
       // Display the move on the board
-      var el = document.querySelector('[data-position="'+ event.position + '"]');
+      var el = document.querySelector('[data-position="'+ event.message.position + '"]');
       el.firstChild.nodeValue = event.message.player;
       console.log(el);
 
